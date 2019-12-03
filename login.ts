@@ -1,7 +1,7 @@
 import express from 'express';
 const app = express();
 const bcrypt = require('bcrypt'); // allow to hash passwords and compare hashed passwords
-const passport = require('passport');
+const passport = require('passport'); // passport is used for authentication/ local is je just to use UN and PW to login
 const initializePassport = require('./passport.config');
 initializePassport(passport);
 const users:any = []; // empty array for the userdata because we don't want to use a database yet
