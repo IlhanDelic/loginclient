@@ -19,7 +19,7 @@ function initialize(passport:any, getUserByEmail:any, getUserById:any ) {
         }
 
     } catch (e) {
-       return done(e) // catches the error
+       return done(e) // catches the error.
     }
    };
 
