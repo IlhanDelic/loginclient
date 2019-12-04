@@ -39,12 +39,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+//load in enviornment variables
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 var express_1 = __importDefault(require("express"));
 var app = express_1.default();
-var bcrypt = require('bcrypt');
-var users = [];
-app.set('view-engin', 'ejs');
-app.use(express_1.default.urlencoded({ extended: false }));
+var bcrypt = require('bcrypt'); // allow to hash passwords and compare hashed passwords
+var passport = require('passport'); // passport is used for authentication/ local is je just to use UN and PW to login
+var flash = require('express-flash');
+var session = require('express-session');
+var initializePassport = require('./passport.config');
+initializePassport(passport, function (email) {
+    users.find(function (user) { return user.email === email; }); //finding the user based on email
+});
+var users = []; // empty array for the userdata because we don't want to use a database yet
+app.set('view-engine', 'ejs');
+app.use(express_1.default.urlencoded({ extended: false })); // make sure you can access the data in the req instead of the post methode
+app.use(flash());
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false // do you want to save an empty value in the session and we dont want that
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 //--------------------------------------------------------------------------- homepage
 app.get('/', function (req, res) {
     res.render('index.ejs', { name: 'ilhan' });
@@ -54,9 +73,11 @@ app.get('/login', function (req, res) {
     res.render('login.ejs');
 });
 //--------------------------------------------------------------------------- login post
-app.post('/login', function (req, res) {
-    req.body.name;
-});
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true // let us have a flash message
+}));
 //--------------------------------------------------------------------------- register
 app.get('/register', function (req, res) {
     res.render('register.ejs');
@@ -75,16 +96,16 @@ app.post('/register', function (req, res) { return __awaiter(void 0, void 0, voi
                     id: Date.now().toString(),
                     name: req.body.name,
                     email: req.body.email,
-                    password: hashedPassword
+                    password: hashedPassword // the hashed password
                 });
-                res.redirect('/login');
+                res.redirect('/login'); // redirects to login page when a account is registered
                 return [3 /*break*/, 3];
             case 2:
                 _a = _b.sent();
-                res.redirect('/register');
+                res.redirect('/register'); // if something fails you get redirected to the register page
                 return [3 /*break*/, 3];
             case 3:
-                console.log(users);
+                console.log(users); // print the array of user data in the console
                 return [2 /*return*/];
         }
     });
