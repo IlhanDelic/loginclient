@@ -1,10 +1,11 @@
 # loginclient
-this program is a simple example of a login interface 
+This program is a simple example of a login interface. It's a test for me to use authentication and verify users that exist. When there this program is completed I will expand it so every users can see their own data and add more people to their account. For now it will function as a login/register and welcome screen. 
+
 
 
 # installation 
 
-you need to install the follow software
+You need to install the follow software
 ```
  npm i express ejs 
 
@@ -16,15 +17,15 @@ you need to install the follow software
  
  npm i methode-override
 ```
-you could put everything in one line like this: 
+You could put everything in one line like this: 
 
 ```
 npm i express .....
 ```
-with a space te separate the other installations
+With a space te separate the other installations
 
 # setup 
-no configuration just run the following command after installing everything
+No configuration just run the following command after installing everything
  ```
   npm run devStart
 ```
