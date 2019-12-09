@@ -18,7 +18,10 @@ you need to install the follow software
 
 ```
 you could put everything in one line like this: 
-``` npm i express .......
+
+```
+npm i express .....
+
 ```
 with a space te seperate the other installations
 
