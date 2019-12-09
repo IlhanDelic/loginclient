@@ -13,8 +13,14 @@ you need to install the follow software
  npm i bcrypt
   
  npm i passport passport-local express-session express-flash
-```
+ 
+ npm i methode-override
 
+```
+you could put everything in one line like this: 
+``` npm i express .......
+```
+with a space te seperate the other installations
 
 # setup 
 no configuration just run the following command after installing everything
